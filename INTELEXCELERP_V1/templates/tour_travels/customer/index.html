@@ -1,0 +1,78 @@
+            {% extends 'tour_travels/master.html' %}
+            {% load crispy_forms_tags %}
+            {% load static %}
+          {% block pagename %}
+                Travel Agency
+          {% endblock  %}</h1>
+          {% block pagenaeMessage %}
+                Add Travel Agencies, Modify and Delete
+          {% endblock  %}</h1>
+            {% block body %}
+
+
+
+                    <div class="body-content">
+                   {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                        <strong>Info</strong> {{ message.message }}
+                    </div>
+                   {% endfor%}
+                        <form method="POST" noValidate>
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <p class="mb-4">Add Travel Agencies</p>
+                                    {% csrf_token %}
+
+                                   {{ customerform|crispy }}
+                                </div>
+                                <div class="card-footer">
+                                    <input type="submit" value=" Add " class="btn btn-success">
+                                    <input type="reset" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+             <!--/.Content Header (Page header)-->
+
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="mb-4">Travel Agencies List</h2>
+                                <div class="table-responsive">
+                                    <table class="table display table-bordered table-striped table-hover basic">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Contact</th>
+                                                <th>Remaining Amount Was</th>
+                                                <th>Paid Remaining Amount</th>
+                                                <th>Still Remaining amount</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for customer in customerdata %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ customer.cname }}</td>
+                                                <td>{{ customer.ccontact }}</td>
+                                                <td>{{ customer.remainingamountwas }}</td>
+                                                <td>{{ customer.installmentPaid }}</td>
+                                                <td><a href="{% url 'customerinstallmentadd' getid=customer.pk %}"> Rs. {{ customer.stillremaining }}</a></td>
+                                                <td width="15%">
+                                                <a href="{% url 'customeredit' pk=customer.pk %}"> Edit <i class="fas fa-check"></i> </a> |
+                                                <a onclick="return confirm('are sure to delete {{customer.cname}}')" href="{% url 'customerdelete' pk=customer.pk %}"> Delete <i class="fas fa-trash-alt"></i> </a>
+                                                </td>
+
+                                            </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+{% endblock body %}

@@ -1,0 +1,411 @@
+{% extends 'tour_travels/master.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block pagename %}
+Travel Agency
+{% endblock  %}</h1>
+{% block pagenaeMessage %}
+Passenger Tickets, Modify and Delete
+{% endblock  %}</h1>
+{% block body %}
+
+
+
+<div class="body-content">
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        <strong>Info</strong> {{ message.message }}
+    </div>
+    {% endfor%}
+    <form method="POST" id="ticketform" noValidate>
+        <div class="card mb-4">
+            <div class="card-body">
+                <p class="mb-4">Book Passenger Tickets</p>
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        {{ ticketform.dateofissue|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-3">
+                        {{ ticketform.traveldate|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-3">
+                        {{ ticketform.pnr|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-3">
+                        {{ ticketform.root|as_crispy_field }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        {{ ticketform.airline|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-1">
+                        <div id="div_id_airline" class="form-group">
+                            <label for="id_airline" class="col-form-label  requiredField">
+                                &nbsp;<span class="asteriskField"></span>
+                            </label>
+                            <div class="">
+                                <button type="button" class="btn btn-success md-trigger md-setperspective mb-2 mr-1" data-modal="modal-4"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        {{ ticketform.madeby|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-2">
+                        {{ ticketform.careof|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-1">
+                        <div id="div_id_careof" class="form-group">
+                            <label for="id_careof" class="col-form-label  requiredField">
+                                &nbsp;<span class="asteriskField"></span>
+                            </label>
+                            <div class="">
+                                <button type="button" class="btn btn-success md-trigger md-setperspective mb-2 mr-1" data-modal="modal-5"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        {{ ticketform.recieveableamount|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        {{ passengerform.pname|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-3">
+                        {{ passengerform.pticketno|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-3">
+                        {{ passengerform.pamount|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-2">
+                        {{ passengerform.pcommission|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-1">
+
+                        <div id="div_id_pticketno" class="form-group">
+                            <label for="id_pticketno" class="col-form-label  requiredField">
+                                &nbsp;<span class="asteriskField"></span>
+                            </label>
+                            <div class="">
+                                <button type="button" class="btn btn-info btn-circle mb-2 mr-1 addpassenger"><i
+                                        class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <span class="setpassenger">
+                        {% if number_of_rows_was_entered_from_jquery %}
+                            {% for i in values_of_ticket_and_passenger %}
+                            <div class="row">
+                                    <input type="hidden" class="countvalue" name="range" value="{{ forloop.counter }}">
+                                <div class="col-sm-3">
+                                    <div id="div_id_pname" class="form-group"><label for="id_pname"
+                                            class="col-form-label  requiredField">Passenger Name<span class="asteriskField">*</span>
+                                        </label>
+                                        <div class=""><input type="text" value="{{i.pname}}"
+                                                name="pname{{ forloop.counter }}" maxlength="50" class="textinput textInput form-control"
+                                                required="" id="id_pname{{ forloop.counter }}"></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div id="div_id_pticketno" class="form-group"><label for="id_pticketno"
+                                            class="col-form-label  requiredField">Passenger Ticket No<span
+                                                class="asteriskField">*</span></label>
+                                        <div class=""><input type="text" value="{{i.pticketno}}" name="pticketno{{ forloop.counter }}" maxlength="50"
+                                                class="textinput textInput form-control" required="" id="id_pticketno{{ forloop.counter }}"></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div id="div_id_pamount" class="form-group"><label for="id_pamount"
+                                            class="col-form-label  requiredField">Ticket Amount<span
+                                                class="asteriskField">*</span></label>
+                                        <div class=""><input type="text" value="{{i.pticketamount}}" name="pamount{{ forloop.counter }}" maxlength="50"
+                                                class="textinput textInput form-control ticketamount" required="" id="id_pamount{{ forloop.counter }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div id="div_id_pamount" class="form-group"><label for="id_pamount"
+                                            class="col-form-label  requiredField">Extra Commssin<span
+                                                class="asteriskField">*</span></label>
+                                        <div class=""><input type="text" value="{{i.pcommission}}" name="pcommission{{ forloop.counter }}" maxlength="50"
+                                                class="textinput textInput form-control ticketcommssion" required="" id="id_pamount{{ forloop.counter }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% endfor %}
+                        {% endif %}
+                </span>
+                <div class="row">
+                    <div class="col-sm-3">
+                        {{ ticketform.recievedamount|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-3">
+                        {{ ticketform.totalamount|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-3">
+                        {{ ticketform.remainingamount|as_crispy_field }}
+                    </div>
+                    <div class="col-sm-3">
+                        {{ ticketform.profit|as_crispy_field }}
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{ ticketform.Description|as_crispy_field }}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <input type="submit" value=" Add " class="btn btn-success">
+                <input type="reset" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--/.Content Header (Page header)-->
+
+<div class="body-content">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="mb-4">Travel Agencies List</h2>
+            <div class="table-responsive">
+                <table class="table display table-bordered table-striped table-hover basic">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>PNR</th>
+                            <th>Total Amount</th>
+                            <th>Recieved Amount</th>
+                            <th>Remaining Amount</th>
+                            <th>Number Of Passenger</th>
+                            <th>Care of</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in ticketdata %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ ticket.pnr }}</td>
+                            <td>{{ ticket.totalamount }}</td>
+                            <td>{{ ticket.recievedamount }}</td>
+                            <td>{{ ticket.remainingamount }}</td>
+                            <td>{{ ticket.passnger }}</td>
+                            <td>{{ ticket.customer }}</td>
+                            <td width="18%">
+                                <a class="btn btn-success"
+                                    href="{% url 'ticketview' pk=ticket.pk pnr=ticket.pnr %}">View  <i
+                                        class="fas fa-eye"></i></a>
+                                <!-- <a class="btn btn-primary" href="{% url 'ticketedit' pk=ticket.pk %}"> Edit <i
+                                        class="fas fa-edit"></i> </a> -->
+                                <a class="btn btn-danger"
+                                    onclick="return confirm('are sure to delete {{ticket.cname}}')"
+                                    href="{% url 'ticketdelete' pk=ticket.pk %}"> Delete  <i
+                                        class="fas fa-trash-alt"></i> </a>
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+
+
+
+<!-- Moel start eher -->
+<!-- <button class="btn btn-success md-trigger md-setperspective mb-2 mr-1" data-modal="modal-18">Slip from top</button> -->
+
+                    <div class="card mb-4">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                  <div class="md-modal md-effect-18" id="modal-4">
+                                      <div class="md-content">
+                                          <h4 class="font-weight-600 mb-0">Add a New Airline </h4>
+
+                                          <div class="n-modal-body">
+                                              <form id="add_airline_form" method="post">
+                                                  {% csrf_token %}
+                                                  <input type="hidden" name="ajax" value="ajax">
+                                                  {{ airlineform|crispy }}
+                                              </form>
+                                              <div class="row">
+                                                <div class="col-md-2">
+                                                  <button class="btn btn-success add_airline">Add</button>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button class="btn btn-primary md-close" style="">Close</button>
+                                                </div>
+                                                <div class="col-md-8">
+                                                  <p class="text-danger got_submit_error" style="display:none">ERROR Please fill all required fields</p>
+
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  <div class="md-overlay"></div>
+                                </div>
+                          </div>
+                    </div>
+
+<!-- Moel end eher -->
+
+
+
+
+<!-- Moel start eher -->
+<!-- <button class="btn btn-success md-trigger md-setperspective mb-2 mr-1" data-modal="modal-18">Slip from top</button> -->
+
+                    <div class="card mb-4">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                  <div class="md-modal md-effect-18" id="modal-5">
+                                      <div class="md-content">
+                                          <h4 class="font-weight-600 mb-0">Add a New Airline </h4>
+
+                                          <div class="n-modal-body">
+                                              <form id="add_careof_form" method="post">
+                                                  {% csrf_token %}
+                                                  <input type="hidden" name="ajax" value="ajax">
+                                                  {{ customerform|crispy }}
+                                              </form>
+                                              <div class="row">
+                                                <div class="col-md-2">
+                                                    <button class="btn btn-success add_careof">Add</button>
+                                                </div>
+                                                <div class="col-md-2">
+                                                      <button class="btn btn-primary md-close" style="">Close</button>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <p class="text-danger got_submit_error" style="display:none">ERROR Please fill all required fields</p>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  <div class="md-overlay"></div>
+                                </div>
+                          </div>
+                    </div>
+
+<!-- Moel end eher -->
+
+
+</div>
+
+
+
+
+    </div>
+
+
+
+        {% endblock body %}
+        {% block js %}
+
+
+        <script>
+
+            $(document).ready(function () {
+
+                $('#ticketform').delegate('.addpassenger','click',function () {
+                    var i = $.trim($('.setpassenger').children('div.row:last').children('input.countvalue').val());
+                    i = i==''?0:i;
+                    // var i = parseInt($(this).parent().parent().parent().parent().prev('div.row').children('input.countvalue').val()==NaN?1: $(this).parent().parent().parent().parent().prev('div.row').children('input.countvalue').val());
+                    // alert(i);
+                    i++;
+                    $('.setpassenger').append('<div class="row"><input type="hidden" class="countvalue" name="range" value="'+i+'"> <div class="col-sm-3"><div id="div_id_pname" class="form-group"><label for="id_pname" class="col-form-label  requiredField">Passenger Name<span class="asteriskField">*</span> </label> <div class=""><input type="text" name="pname' + i + '" maxlength="50" class="textinput textInput form-control" required="" id="id_pname"></div></div></div> <div class="col-sm-3"><div id="div_id_pticketno" class="form-group"><label for="id_pticketno" class="col-form-label  requiredField">Passenger Ticket No<span class="asteriskField">*</span></label><div class=""><input type="text" name="pticketno' + i + '" maxlength="50" class="textinput textInput form-control" required="" id="id_pticketno"></div></div></div><div class="col-sm-3"><div id="div_id_pamount" class="form-group"><label for="id_pamount" class="col-form-label  requiredField">Ticket Amount<span class="asteriskField">*</span></label><div class=""><input type="text" name="pamount' + i + '" maxlength="50" class="textinput textInput form-control ticketamount" required="" id="id_pamount"></div></div></div><div class="col-sm-3"><div id="div_id_pcommission" class="form-group"><label for="id_pcommission" class="col-form-label  requiredField">Extra Commssion<span class="asteriskField">*</span></label><div class=""><input type="text" name="pcommission'+ i + '" maxlength="50" class="textinput textInput form-control ticketcommssion" required="" id="id_pcommission"></div></div></div></div>');
+
+                });
+
+
+                $(document).on("keyup", ".ticketamount, .ticketcommssion, #id_recieveableamount, #id_recievedamount", function () {
+                    var sum = 0;
+                    var extrasum=0;
+                    $('.ticketamount').each(function () {
+                        var value = Number($(this).val());
+                        if (!isNaN(value)) sum += value;
+                        $('#id_totalamount').val(sum);
+                    });
+                    $('.ticketcommssion').each(function () {
+                        var value = Number($(this).val());
+                        if (!isNaN(value)) extrasum += value;
+                        $('#id_recieveableamount').val(sum+extrasum);
+                    });
+
+                    recieveableamount = $('#id_recieveableamount').val();
+                    recievedamount = $('#id_recievedamount').val();
+                    profit = recievedamount-sum;
+                    $('#id_profit').val(profit);
+                    recievedamounts = recieveableamount - recievedamount;
+                    $('#id_remainingamount').val(recievedamounts);
+                });
+
+
+
+                $('.add_airline').on('click',function(){
+                      $('.got_submit_error').hide();
+                      var url = "{% url 'airlineadd' %}";
+                      $.ajax({
+                        url: url,
+                        type:'POST',
+                        data: $('#add_airline_form').serialize(),
+                        // data: {name: airline_name, airlinecode: airline_code ,description: airline_desc, },
+                        success:function(data){
+                              if(data=='error'){
+                                $('.got_submit_error').show();
+                              }else{
+                                  $('.got_submit_error').hide();
+                                  $('#id_airline').append('<option selected="selected" value="'+data.pk+'">'+data.name+'</option>');
+                                  $('.md-close').click();
+                              }
+                        },
+                        error:function(error){
+                          console.log(error);
+                        }
+                      });
+                });
+
+                $('.add_careof').on('click',function(){
+                      $('.got_submit_error').hide();
+                      var url = "{% url 'customeradd' %}";
+                      $.ajax({
+                        url: url,
+                        type:'POST',
+                        data: $('#add_careof_form').serialize(),
+                        // data: {name: airline_name, airlinecode: airline_code ,description: airline_desc, },
+                        success:function(data){
+                              if(data=='error'){
+                                $('.got_submit_error').show();
+                              }else{
+                                  $('.got_submit_error').hide();
+                                  $('#id_careof').append('<option selected="selected" value="'+data.pk+'">'+data.name+'</option>');
+                                  $('.md-close').click();
+                              }
+                        },
+                        error:function(error){
+                          console.log(error);
+                        }
+                      });
+                });
+
+            });
+        </script>
+        {% endblock js %}

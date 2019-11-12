@@ -1,0 +1,81 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!doctype html>
+<html lang="en">
+    
+<!-- Mirrored from bhulua.thememinister.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Oct 2019 11:53:17 GMT -->
+<head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Responsive Bootstrap 4 Admin &amp; Dashboard Template">
+        <meta name="author" content="Bdtask">
+        <title>Bhulua - Bootstrap 4 Admin Template Deshboard</title>
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/dist/img/favicon.png'%}">
+        <!--Global Styles(used by all pages)-->
+        <link href="{% static 'assets/plugins/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/metisMenu/metisMenu.min.css'%}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/fontawesome/css/all.min.css'%}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/typicons/src/typicons.min.css'%}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/themify-icons/themify-icons.min.css'%}" rel="stylesheet">
+        <!--Third party Styles(used by this page)--> 
+        <link href="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
+        <!--Start Your Custom Style Now-->
+        <link href="{% static 'assets/dist/css/style.css'%}" rel="stylesheet">
+        {% block css %}
+        {% endblock css %}
+    </head>
+
+    
+       <body>
+            <div class="row my-4">
+                <div class="col-sm-6 offset-3">
+                <form class="register-form" noValidate method="POST">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Login Panel</h2>
+                        </div>
+                        <div class="card-body">
+                             {% csrf_token %}
+                             {{ form|crispy }}
+                        </div>
+                        <div class="card-footer">
+                            
+                            <div class="bottom-text text-center mx-3">
+                            <button type="submit" class="btn btn-success mx-4">Sign in</button>
+                                Don't have an account? <a href="register.html" class="font-weight-500">Sign Up</a><br>
+                                Remind <a href="forget_password.html" class="font-weight-500">Password</a>
+                            </div>
+                        </div>
+                    </div>
+                 </form>
+                </div> 
+           
+            </div>
+ 
+                        
+                       
+                            
+                       
+       </body>
+        <!--Global script(used by all pages)-->
+        <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js'%}"></script><script src="{% static 'assets/plugins/jQuery/jquery-3.4.1.min.js'%}"></script>
+        <script src="{% static 'assets/dist/js/popper.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/metisMenu/metisMenu.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js'%}"></script>
+        <!-- Third Party Scripts(used by this page)-->
+        <script src="{% static 'assets/plugins/chartJs/Chart.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/sparkline/sparkline.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/datatables/dataTables.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.js'%}"></script>
+        <!--Page Active Scripts(used by this page)-->
+        <script src="{% static 'assets/dist/js/pages/dashboard.js'%}"></script>
+        <!--Page Scripts(used by all page)-->
+        <script src="{% static 'assets/dist/js/sidebar.js'%}"></script>
+    </body>
+ {% block js %}
+                    {% endblock js %}
+<!-- Mirrored from bhulua.thememinister.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Oct 2019 11:54:23 GMT -->
+</html>

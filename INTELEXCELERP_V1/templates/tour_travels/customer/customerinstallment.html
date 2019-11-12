@@ -1,0 +1,223 @@
+            {% extends 'tour_travels/master.html' %}
+            {% load crispy_forms_tags %}
+            {% load static %}
+          {% block pagename %}
+                Travel Agency
+          {% endblock  %}</h1>
+          {% block pagenaeMessage %}
+                Add Travel Agencies, Modify and Delete
+          {% endblock  %}</h1>
+               {% block css %}
+            <style>
+                .text-bold{
+                    font-weight:bold;
+                }
+
+                .pnr{
+                       background: #ee0707;
+                        padding: 0px 5px;
+                        text-transform: uppercase;
+                        color: white;
+                }
+                .table-bordered td, .table-bordered th {
+                    border: 1px solid #0f51d5;
+                    background-image: radial-gradient(#e8a3a3, transparent);
+                }
+
+            </style>
+          {% endblock css %}
+            {% block body %}
+
+
+
+                    <div class="body-content">
+                   {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                        <strong>Info</strong> {{ message.message }}
+                    </div>
+                   {% endfor%}
+                   <div class="row">
+                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+                            <div class="card card-stats statistic-box mb-4">
+                                <div class="card-header card-header-warning card-header-icon position-relative border-0 text-right px-3 py-0">
+                                    <div class="card-icon d-flex align-items-center justify-content-center">
+                                        <i class="typcn typcn-device-tablet"></i>
+                                    </div>
+                                    <p class="card-category text-uppercase fs-10 font-weight-bold text-muted">Pending</p>
+                                    <h3 class="card-title fs-18 font-weight-bold">
+                                        <small>RS.</small>  {{ collect_remaining_amints }}
+                                    </h3>
+                                </div>
+                                <div class="card-footer p-3 bg-primary text-default">
+                                    <div class="stats " style="font-size: 20px;">
+                                        <i class="typcn typcn-warning text-warning mr-2"></i>
+                                        <a href="#" class="warning-link text-white">Remaining Amount was</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+                            <div class="card card-stats statistic-box mb-4">
+                                <div class="card-header card-header-warning card-header-icon position-relative border-0 text-right px-3 py-0">
+                                    <div class="card-icon d-flex align-items-center justify-content-center">
+                                        <i class="typcn typcn-device-tablet"></i>
+                                    </div>
+                                    <p class="card-category text-uppercase fs-10 font-weight-bold text-muted">Used Space</p>
+                                    <h3 class="card-title fs-18 font-weight-bold">
+                                        <small>Rs</small> {{ getting_all_installment_after_paid_from_customer }}
+                                    </h3>
+                                </div>
+                                <div class="card-footer p-3 bg-success">
+                                    <div class="stats " style="font-size: 20px;">
+                                        <i class="typcn typcn-warning text-warning mr-2"></i>
+                                        <a href="#" class="warning-link text-white">Remaining Amount Paid</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+                            <div class="card card-stats statistic-box mb-4">
+                                <div class="card-header card-header-warning card-header-icon position-relative border-0 text-right px-3 py-0">
+                                    <div class="card-icon d-flex align-items-center justify-content-center">
+                                        <i class="typcn typcn-device-tablet"></i>
+                                    </div>
+                                    <p class="card-category text-uppercase fs-10 font-weight-bold text-muted">Used Space</p>
+                                    <h3 class="card-title fs-18 font-weight-bold">
+                                        <small>RS. </small>{{still_remaining_amount_from_customer }}
+                                    </h3>
+                                </div>
+                                <div class="card-footer p-3 bg-danger">
+                                    <div class="stats " style="font-size: 20px;">
+                                        <i class="typcn typcn-warning text-warning mr-2"></i>
+                                        <a href="#" class="warning-link text-white">Still Remaining Amount</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <form method="POST" noValidate>
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                <table class="table table-bordered  ">
+                                    <tbody>
+                                        <tr>
+                                            {% for pnr in all_pnr_this_customer %}
+                                                <td colspan="" class="text-bold"> <span class="text-bold"><a href="{% url 'ticketview' pk=pnr.id pnr=pnr.pnr %}">Wiew More <i class="fas fa-eye"></i></a> {{ pnr.pnr }}:</span> <span class="pnr">  {{ pnr.remainingamount }} </span> </td>
+                                            {% endfor %}
+                                        </tr>
+                                       <!-- <tr>
+                                            <td colspan="{{ number_of_columns }}" class="text-bold"> <span class="text-bold"> Total Remaining Amount of {{ customername }}:</span> <span class="pnr">  {{ collect_remaining_amints }} </span> </td>
+                                           <tr>
+                                        -->
+
+
+                                       <tbody>
+                                    </table>
+                                    <p class="mb-4">Submit Installmets Form</p>
+                                    {% csrf_token %}
+
+                                   <div class="row">
+                                        <div class="col-sm-3">
+                                            {{customerinstallmentform.customerid|as_crispy_field}}
+                                        </div>
+                                        <div class="col-sm-3">
+                                              <div id="div_id_pnr" class="form-group">
+
+                                                    <label for="id_pnr" class="col-form-label  requiredField">
+                                                        PNR<span class="asteriskField">*</span>
+                                                    </label>
+                                                    <div class="">
+                                                            <select name="pnr"  id="id_pnr" class="textinput textInput form-control form-control class_pnr">
+                                                                <option value="">Select PNR Sold to {{ customername }}</option>
+                                                                {% for pnr in all_pnr_this_customer%}
+                                                                    <option value="{{ pnr.pnr }}">{{ pnr.pnr }}</option>
+                                                                {% endfor %}
+                                                            <select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            {{customerinstallmentform.installment|as_crispy_field}}
+                                        </div>
+                                        <div class="col-sm-3">
+                                            {{customerinstallmentform.paymentdate|as_crispy_field}}
+                                        </div>
+
+
+                                   </div>
+                                   <div class="row">
+                                        <div class="col-sm-12">
+                                            {{customerinstallmentform.description|as_crispy_field}}
+                                        </div>
+                                   </div>
+                                </div>
+                                <div class="card-footer">
+                                    <input type="submit" value=" Add " class="btn btn-success">
+                                    <input type="reset" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+             <!--/.Content Header (Page header)-->
+
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="mb-4">Travel Agencies List</h2>
+                                <div class="table-responsive">
+                                    <table class="table display table-striped table-hover basic">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>PNR</th>
+                                                <th>Payment Date</th>
+                                                <th>Installment Amount</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for customerinstallment in customerinstallmentdata %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ customerinstallment.customerid }}</td>
+                                                <td>{{ customerinstallment.pnr }}</td>
+                                                <td>{{ customerinstallment.paymentdate }}</td>
+                                                <td> {{ customerinstallment.installment }} </td>
+                                                <td width="15%">
+                                                <a href="{% url 'customerinstallmentedit' pk=customerinstallment.pk %}"> Edit <i class="fas fa-check"></i> </a> |
+                                                <a onclick="return confirm('are sure to delete {{customerinstallment.cname}}')" href="{% url 'customerinstallmentdelete' pk=customerinstallment.pk %}"> Delete <i class="fas fa-trash-alt"></i> </a>
+                                                </td>
+
+                                            </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+{% endblock body %}
+
+{% block js %}
+    <script>
+        $(document).ready(function(){
+           $('.class_pnr').change(function(){
+               id = $(this).children('option:selected').val();
+               alert(id);
+               $.ajax({
+                   url:'',
+                   type:'POST',
+                   data: {},
+                   success:function(data){
+                       alert(data);
+                   }
+               });
+           });
+        });
+    </script>
+{% endblock js %}

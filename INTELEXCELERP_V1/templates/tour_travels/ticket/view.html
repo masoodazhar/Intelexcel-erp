@@ -1,0 +1,199 @@
+            {% extends 'tour_travels/master.html' %}
+            {% load crispy_forms_tags %}
+            {% load static %}
+          {% block pagename %}
+                Ticket Details
+          {% endblock  %}</h1>
+          {% block pagenaeMessage %}
+                Ticket Details, Exploaded Report
+          {% endblock  %}</h1>
+          {% block css %}
+            <style>
+                .text-bold{
+                    font-weight:bold;
+                }
+
+                .pnr{
+                        background: #96f496;
+                        padding: 0px 5px;
+                        text-transform: uppercase;
+                }
+                /* .table-bordered td, .table-bordered th {
+                    border: 1px solid #0f51d5;
+                    background-image: radial-gradient(#e8a3a3, transparent);
+                } */
+            </style>
+          {% endblock css %}
+            {% block body %}
+
+
+
+             <!--/.Content Header (Page header)-->
+
+                    <div class="body-content">
+
+                      <div class="card">
+                          <div class="card-header">
+                              <div class="d-flex justify-content-between align-items-center">
+                                  <div>
+                                      <h6 class="fs-17 font-weight-600 mb-0">Ticket List <span class="text-bold"> PNR:</span> <span class="pnr"> {{ ticketdata.pnr }} </span></h6>
+                                  </div>
+                                  <div class="text-right">
+                                      <div class="actions">
+                                          <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                          <div class="dropdown action-item" data-toggle="dropdown">
+                                              <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                              <div class="dropdown-menu dropdown-menu-right">
+                                                  <a href="#" class="dropdown-item">Refresh</a>
+                                                  <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                  <a href="#" class="dropdown-item">Settings</a>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="card-body">
+                              <div class="table-responsive">
+                                  <table id="example" class="table display table-bordered table-striped table-hover">
+                                      <thead>
+                                          <tr>
+                                              <th>Customer & Passenger Name</th>
+                                              <th>Traveling & Ticket Info</th>
+                                              <th>Root & Ticket Amounts</th>
+                                              <th>Commssions</th>
+
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                             <td> <span class="text-bold"> Date of issue :</span> {{ ticketdata.dateofissue }} </td>
+                                             <td> <span class="text-bold"> Traveling Date :</span> {{ ticketdata.traveldate }} </td>
+                                             <td> <span class="text-bold"> Route :</span> {{ ticketdata.root }} </td>
+                                             <td> &nsp </td>
+                                        </tr>
+                                        <tr>
+                                             <td> <span class="text-bold"> Care of:</span> {{ ticketdata.careof }} </td>
+                                             <td> &nbsp; </td>
+                                             <td> &nbsp; </td>
+                                             <td> &nbsp; </td>
+
+                                        </tr>
+                                         <tr>
+                                             <td> <span class="text-bold"> Made By:</span> {{ ticketdata.madeby }} </td>
+                                             <td> <span class="text-bold"> Airline:</span> {{ ticketdata.airline }} </td>
+                                             <td> <span class="text-bold"> Profit:</span> {{ ticketdata.profit }} </td>
+                                             <td> &nbsp; </td>
+                                        </tr>
+                                        <tr>
+                                             <td> <span class="text-bold"> Total Amount:</span> {{ ticketdata.totalamount }} </td>
+                                             <td> <span class="text-bold"> Recieveable Amount:</span> {{ ticketdata.recieveableamount }} </td>
+                                             <td> <span class="text-bold"> Recieved Amount:</span> {{ ticketdata.recievedamount }} </td>
+                                             <td> <span class="text-bold"> Remaining Amount:</span> {{ ticketdata.remainingamount }} </td>
+
+                                        </tr>
+
+
+                                        {% for passenger in passengerdata %}
+                                        <tr>
+                                             <td> <span class="text-bold"> Passenger Name:</span> {{ passenger.pname }} </td>
+                                             <td> <span class="text-bold"> Ticket Number:</span> {{ passenger.pticketno }} </td>
+                                             <td> <span class="text-bold"> Amount:</span> {{ passenger.pamount }} </td>
+                                             <td> <span class="text-bold"> Commssion:</span> {{ passenger.pamount }}  </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                      </tbody>
+
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                                    <!-- <table class="table table-bordered  ">
+                                    <tbody>
+                                       <tr>
+                                            <td colspan="4" class="text-bold"> <span class="text-bold"> PNR:</span> <span class="pnr"> {{ ticketdata.pnr }} </span> </td>
+                                       <tr>
+                                       <tr>
+                                            <td> <span class="text-bold"> Date of issue :</span> {{ ticketdata.dateofissue }} </td>
+                                            <td> <span class="text-bold"> Traveling Date :</span> {{ ticketdata.traveldate }} </td>
+                                            <td colspan="2"> <span class="text-bold"> Route :</span> {{ ticketdata.root }} </td>
+                                       <tr>
+                                       <tr>
+                                            <td colspan="4"> <span class="text-bold"> Care of:</span> {{ ticketdata.careof }} </td>
+
+                                       <tr>
+                                        <tr>
+                                            <td colspan=""> <span class="text-bold"> Made By:</span> {{ ticketdata.madeby }} </td>
+                                            <td colspan=""> <span class="text-bold"> Airline:</span> {{ ticketdata.airline }} </td>
+                                            <td colspan="2"> <span class="text-bold"> Profit:</span> {{ ticketdata.profit }} </td>
+
+                                       <tr>
+                                       <tr>
+                                            <td colspan=""> <span class="text-bold"> Total Amount:</span> {{ ticketdata.totalamount }} </td>
+                                            <td colspan=""> <span class="text-bold"> Recieveable Amount:</span> {{ ticketdata.recieveableamount }} </td>
+                                            <td colspan=""> <span class="text-bold"> Recieved Amount:</span> {{ ticketdata.recievedamount }} </td>
+                                            <td colspan=""> <span class="text-bold"> Remaining Amount:</span> {{ ticketdata.remainingamount }} </td>
+
+                                       <tr>
+                                       <tr>
+                                            <td colspan="4"> <h2>Passengers</h2> </td>
+                                       <tr>
+                                       {% for passenger in passengerdata %}
+                                       <tr>
+                                            <td colspan="2"> <span class="text-bold"> Passenger Name:</span> {{ passenger.pname }} </td>
+                                            <td colspan=""> <span class="text-bold"> Ticket Number:</span> {{ passenger.pticketno }} </td>
+                                            <td colspan=""> <span class="text-bold"> Amount:</span> {{ passenger.pamount }} </td>
+                                       <tr>
+                                       {% endfor %}
+                                       <tbody>
+                                    </table> -->
+
+
+
+{% comment %}
+<div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="mb-4">Travel Agencies List</h2>
+                                <div class="table-responsive">
+                                    <table class="table display table-bordered table-striped table-hover basic">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Passenger Name</th>
+                                                <th>Ticket Number</th>
+                                                 <th>Ticket Amount</th>
+                                                 <th>PNR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for passenger in passengerdata %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ passenger.pname }}</td>
+                                                <td>{{ passenger.pticketno }}</td>
+                                                <td>{{ passenger.ptamount }}</td>
+                                                <td>{{ passenger.pnrfrom }}</td>
+
+                                            </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div> {% endcomment %}
+
+{% endblock body %}
+{% block js %}
+<script>
+    $(document).ready(function(){
+        var i=1;
+        $('.addpassenger').click(function(){
+            $('.setpassenger').append('<div class="row"> <div class="col-sm-3"><div id="div_id_pname" class="form-group"><label for="id_pname" class="col-form-label  requiredField">Passenger Name<span class="asteriskField">*</span> </label> <div class=""><input type="hidden" name="range" value="'+i+'"><input type="text" name="pname'+i+'" maxlength="50" class="textinput textInput form-control" required="" id="id_pname"></div></div></div> <div class="col-sm-3"><div id="div_id_pticketno" class="form-group"><label for="id_pticketno" class="col-form-label  requiredField">Pticketno<span class="asteriskField">*</span></label><div class=""><input type="text" name="pticketno'+i+'" maxlength="50" class="textinput textInput form-control" required="" id="id_pticketno"></div></div></div><div class="col-sm-3"><div id="div_id_pamount" class="form-group"><label for="id_pamount" class="col-form-label  requiredField">Pamount<span class="asteriskField">*</span></label><div class=""><input type="text" name="pamount'+i+'" maxlength="50" class="textinput textInput form-control" required="" id="id_pamount"></div></div></div><div class="col-sm-3"></div></div>');
+        i++;
+        });
+    });
+</script>
+{% endblock js %}

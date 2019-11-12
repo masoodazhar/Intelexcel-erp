@@ -1,0 +1,109 @@
+            {% extends 'tour_travels/master.html' %}
+            {% load crispy_forms_tags %}
+            {% load static %}
+          {% block pagename %}
+                Travel Agency
+          {% endblock  %}</h1>
+          {% block pagenaeMessage %}
+                Add Travel Agencies, Modify and Delete
+          {% endblock  %}</h1>
+            {% block body %}
+
+
+
+                    <div class="body-content">
+                   {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                        <strong>Info</strong> {{ message.message }}
+                    </div>
+                   {% endfor%}
+                        <form method="POST" noValidate>
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <p class="mb-4">Add Travel Agencies</p>
+                                    {% csrf_token %}
+
+                                   <div class="row">
+                                        <div class="col-sm-4">
+                                            {{ travelagencyform.tname|as_crispy_field  }}
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            {{ travelagencyform.propname|as_crispy_field  }}
+                                        </div>
+                                         <div class="col-sm-4">
+                                            {{ travelagencyform.countername|as_crispy_field  }}
+                                        </div>
+                                   </div>
+                                   <div class="row">
+                                        <div class="col-sm-4">
+                                            {{ travelagencyform.contact|as_crispy_field  }}
+                                        </div>
+                                        <div class="col-sm-4">
+                                            {{ travelagencyform.procontact|as_crispy_field  }}
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            {{ travelagencyform.countercontact|as_crispy_field  }}
+                                        </div>
+                                   </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            {{ travelagencyform.accountantname|as_crispy_field  }}
+                                        </div>
+                                        <div class="col-sm-6">
+                                            {{ travelagencyform.accountantcontact|as_crispy_field  }}
+                                        </div>
+                                   </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            {{ travelagencyform.description|as_crispy_field  }}
+                                        </div>
+                                   </div>
+
+                                </div>
+                                <div class="card-footer">
+                                    <input type="submit" value=" Add " class="btn btn-success">
+                                    <input type="reset" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+             <!--/.Content Header (Page header)-->
+
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="mb-4">Travel Agencies List</h2>
+                                <div class="table-responsive">
+                                    <table class="table display table-bordered table-striped table-hover basic">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Contact</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for travelagency in travelagencydata %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ travelagency.tname }}</td>
+                                                <td>{{ travelagency.contact }}</td>
+                                                <td width="15%">
+                                                <a href="{% url 'travelagencyedit' pk=travelagency.pk %}"> Edit <i class="fas fa-check"></i> </a> |
+                                                <a href="{% url 'travelagencydelete' pk=travelagency.pk %}"> Delete <i class="fas fa-trash-alt"></i> </a>
+                                                </td>
+
+                                            </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+{% endblock body %}

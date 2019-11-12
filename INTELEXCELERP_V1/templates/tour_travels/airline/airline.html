@@ -1,0 +1,144 @@
+            {% extends 'tour_travels/master.html' %}
+            {% load crispy_forms_tags %}
+            {% load static %}
+          {% block pagename %}
+                Travel Agency
+          {% endblock  %}</h1>
+          {% block pagenaeMessage %}
+                Add Travel Agencies, Modify and Delete
+          {% endblock  %}</h1>
+
+
+            {% block body %}
+
+
+
+                    <div class="body-content">
+                   {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                        <strong>Info</strong> {{ message.message }}
+                    </div>
+                   {% endfor%}
+                        <form method="POST" id="ticketform" noValidate>
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <p class="mb-4">Add Travel Agencies</p>
+                                    {% csrf_token %}
+
+                                    {{ airlineform|crispy }}
+
+                                </div>
+                                <div class="card-footer">
+                                    <input type="submit" value=" Add " class="btn btn-success">
+                                    <input type="reset" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+             <!--/.Content Header (Page header)-->
+
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="mb-4">Travel Agencies List</h2>
+                                <div class="table-responsive">
+                                    <table class="table display table-bordered table-striped table-hover basic">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Airline Name</th>
+                                                <th>Airline Code</th>
+                                                <th>Description</th>
+
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for airline in airlinedata %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                 <td>{{ airline.aname }}</td>
+                                                  <td>{{ airline.airlinecode }}</td>
+                                                <td>{{ airline.description }}</td>
+                                                <td width="20%">
+                                                <a class="btn btn-primary" href="{% url 'airlineedit' pk=airline.pk %}"> Edit <i class="fas fa-edit"></i> </a>
+                                                <a class="btn btn-danger" onclick="return confirm('are sure to delete {{airline.cname}}')" href="{% url 'airlinedelete' pk=airline.pk %}"> Delete <i class="fas fa-trash-alt"></i> </a>
+                                                </td>
+
+                                            </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+{% comment %}
+<div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="mb-4">Travel Agencies List</h2>
+                                <div class="table-responsive">
+                                    <table class="table display table-bordered table-striped table-hover basic">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Passenger Name</th>
+                                                <th>Ticket Number</th>
+                                                 <th>Ticket Amount</th>
+                                                 <th>PNR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for passenger in passengerdata %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ passenger.pname }}</td>
+                                                <td>{{ passenger.pticketno }}</td>
+                                                <td>{{ passenger.ptamount }}</td>
+                                                <td>{{ passenger.pnrfrom }}</td>
+
+                                            </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div> {% endcomment %}
+
+{% endblock body %}
+{% block js %}
+<script>
+    $(document).ready(function(){
+        var i=1;
+        $('.addpassenger').click(function(){
+            $('.setpassenger').append('<div class="row"> <div class="col-sm-3"><div id="div_id_pname" class="form-group"><label for="id_pname" class="col-form-label  requiredField">Passenger Name<span class="asteriskField">*</span> </label> <div class=""><input type="hidden" name="range" value="'+i+'"><input type="text" name="pname'+i+'" maxlength="50" class="textinput textInput form-control" required="" id="id_pname"></div></div></div> <div class="col-sm-3"><div id="div_id_pticketno" class="form-group"><label for="id_pticketno" class="col-form-label  requiredField">Passenger Ticket No<span class="asteriskField">*</span></label><div class=""><input type="text" name="pticketno'+i+'" maxlength="50" class="textinput textInput form-control" required="" id="id_pticketno"></div></div></div><div class="col-sm-3"><div id="div_id_pamount" class="form-group"><label for="id_pamount" class="col-form-label  requiredField">Ticket Amount<span class="asteriskField">*</span></label><div class=""><input type="text" name="pamount'+i+'" maxlength="50" class="textinput textInput form-control ticketamount" required="" id="id_pamount"></div></div></div><div class="col-sm-3"></div></div>');
+        i++;
+        });
+
+
+    $(document).on("keyup",".ticketamount, #id_recieveableamount, #id_recievedamount", function(){
+       var sum = 0;
+
+       $('.ticketamount').each(function(){
+           var value = Number($(this).val());
+           if (!isNaN(value)) sum += value;
+           $('#id_totalamount').val(sum);
+       });
+
+      recieveableamount =  $('#id_recieveableamount').val();
+      recievedamount =  $('#id_recievedamount').val();
+      profit = recieveableamount-sum;
+      $('#id_profit').val(profit);
+      recievedamounts = recieveableamount-recievedamount;
+      $('#id_remainingamount').val(recievedamounts);
+    });
+
+
+
+    });
+</script>
+{% endblock js %}

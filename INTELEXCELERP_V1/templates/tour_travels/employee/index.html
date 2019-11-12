@@ -1,0 +1,103 @@
+            {% extends 'tour_travels/master.html' %}
+            {% load crispy_forms_tags %}
+            {% load static %}
+          {% block pagename %}
+                Travel Agency
+          {% endblock  %}</h1>
+          {% block pagenaeMessage %}
+                Add Travel Agencies, Modify and Delete
+          {% endblock  %}</h1>
+            {% block body %}
+
+
+
+                    <div class="body-content">
+                   {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                        <strong>Info</strong> {{ message.message }}
+                    </div>
+                   {% endfor%}
+                        <form method="POST" noValidate>
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <p class="mb-4">Add Travel Agencies</p>
+                                    {% csrf_token %}
+
+                                     <div class="row">
+                                        <div class="col-sm-4">
+                                            {{ employeeform.username|as_crispy_field }}
+                                        </div>
+                                        <div class="col-sm-4">
+                                            {{ employeeform.usercontact|as_crispy_field }}
+                                        </div>
+                                        <div class="col-sm-4">
+                                            {{ employeeform.usercnic|as_crispy_field }}
+                                        </div>
+                                     </div>
+
+                                     <div class="row">
+                                        <div class="col-sm-4">
+                                            {{ employeeform.isfixedsalary|as_crispy_field }}
+                                        </div>
+                                     </div>
+
+                                     <div class="row">
+                                        <div class="col-sm-4">
+                                            {{ employeeform.usersalary|as_crispy_field }}
+                                        </div>
+                                        <div class="col-sm-4">
+                                            {{ employeeform.password1|as_crispy_field }}
+                                        </div>
+                                        <div class="col-sm-4">
+                                            {{ employeeform.password2|as_crispy_field }}
+                                        </div>
+                                     </div>
+
+                                </div>
+                                <div class="card-footer">
+                                    <input type="submit" value=" Add " class="btn btn-success">
+                                    <input type="reset" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+             <!--/.Content Header (Page header)-->
+
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="mb-4">Travel Agencies List</h2>
+                                <div class="table-responsive">
+                                    <table class="table display table-bordered table-striped table-hover basic">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Contact</th>
+                                                <th>Salary</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for employee in employeedata %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ employee.username }}</td>
+                                                <td>{{ employee.usercontact }}</td>
+                                                <td>{{ employee.usersalary }}</td>
+                                                <td width="15%">
+                                                <a href="{% url 'employeeedit' pk=employee.pk %}"> Edit <i class="fas fa-check"></i> </a> |
+                                                <a onclick="return confirm('are sure to delete {{employee.cname}}')" href="{% url 'employeedelete' pk=employee.pk %}"> Delete <i class="fas fa-trash-alt"></i> </a>
+                                                </td>
+
+                                            </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+{% endblock body %}
